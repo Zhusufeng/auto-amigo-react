@@ -1,18 +1,13 @@
 import mysql from "mysql2";
 
-export const connection = mysql.createConnection({
+export const pool = mysql.createPool({
   host: "localhost",
   user: "root",
   password: process.env.MYSQL_PASSWORD,
   database: "auto-amigo-react",
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
 });
 
-// TODO Is this needed now with mysql2?
-export const queryDb = (query: string) => {
-  return new Promise((resolve, reject) => {
-    connection.query(query, function (error, results) {
-      if (error) reject(error);
-      resolve(results);
-    });
-  });
-};
+export const promisePool = pool.promise();
