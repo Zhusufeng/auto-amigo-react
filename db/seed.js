@@ -27,7 +27,7 @@ async function seed() {
   await promisePool.query(seedUSERQuery);
   await promisePool.query(seedGAS_LOGQuery);
   console.log("Database was seeded");
-  return;
+  // TODO It does not close
 }
 
 seed();
