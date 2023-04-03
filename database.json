@@ -1,0 +1,19 @@
+{
+  "dev": {
+    "driver": "mysql",
+    "host": "localhost",
+    "user": "root",
+    "password": { "ENV": "MYSQL_PASSWORD" },
+    "database": "auto-amigo-react",
+    "multipleStatements": true
+  },
+
+  "prod": {
+    "driver": "mysql",
+    "host": "localhost",
+    "user": "root",
+    "password": { "ENV": "MYSQL_PASSWORD" },
+    "database": "auto-amigo-react",
+    "multipleStatements": true
+  }
+}
