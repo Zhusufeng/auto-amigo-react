@@ -33,15 +33,14 @@ exports.up = function (db) {
       id int NOT NULL AUTO_INCREMENT,
       userId int DEFAULT NULL,
       previousMileage int NOT NULL,
-      pricePerGallon float NOT NULL,
-      gallons float NOT NULL,
-      milesDriven int NOT NULL,
       currentMileage int NOT NULL,
+      gallons float NOT NULL,
+      pricePerGallon float NOT NULL,
       updatedAt datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
       createdAt timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
       PRIMARY KEY (id),
       KEY userId (userId),
-      CONSTRAINT GAS_LOG_userId_USER_id FOREIGN KEY (userId) REFERENCES USER (id) ON DELETE CASCADE
+      CONSTRAINT GAS_LOG_userId__USER_id FOREIGN KEY (userId) REFERENCES USER (id) ON DELETE CASCADE
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
   `);
 };
