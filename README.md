@@ -28,7 +28,9 @@ You will need to make sure you have installed the package, db-migrate, globally.
 npm install -g db-migrate
 ```
 
-Create a copy of example.env.local named .env.local. Fill out the file.
+Create a copy of example.env.local named .env. Fill out the file.
+
+<!-- TODO: mysql2 or db-migrate cannot find the env variables when inside of .env.local. Create a copy of example.env.local named .env.local. Fill out the file. -->
 
 Migrate the database up (to get the structure).
 
@@ -39,7 +41,7 @@ db-migrate up
 To seed the database, run
 
 ```bash
-X
+node db/seed.js
 ```
 
 Run the project
