@@ -1,15 +1,51 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Requirements
+
+- Docker
+- MySQL 8.0
+- Node.js
+
 ## Getting Started
 
-First, run the development server:
+<!-- <Git Clone Instruction here> -->
+
+Download the packages.
+
+```bash
+npm i
+```
+
+This uses a MySQL database. Create a database using Docker:
+
+```bash
+docker create --name mysql_8.0_auto_amigo -p 3306:3306 -e MYSQL_ROOT_PASSWORD=your-password-here mysql:8.0
+```
+
+You will need to make sure you have installed the package, db-migrate, globally. (Do not use `sudo`).
+
+```bash
+npm install -g db-migrate
+```
+
+Create a copy of example.env.local named .env.local. Fill out the file.
+
+Migrate the database up (to get the structure).
+
+```bash
+db-migrate up
+```
+
+To seed the database, run
+
+```bash
+X
+```
+
+Run the project
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -36,3 +72,7 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Database
+
+Migration info here
