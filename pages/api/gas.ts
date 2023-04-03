@@ -10,7 +10,9 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const [results] = await promisePool.query("SELECT * FROM USER");
-  console.log(results);
-  res.status(200).json({ name: "John Doe" });
+  const query = `
+    SELECT * FROM GAS_LOG WHERE userId = 1;
+  `;
+  const [results] = await promisePool.query(query);
+  res.status(200).json(results);
 }
