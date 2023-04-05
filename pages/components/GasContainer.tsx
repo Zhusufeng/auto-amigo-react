@@ -18,21 +18,21 @@ export default function GasContainer() {
 
   const getData = async () => {
     const response = await axios.get("/api/gas");
-    const { data } = await response;
+    const { data } = response;
     console.log(data);
     setData(data);
   };
 
   useEffect(() => {
     getData();
-  }, [setData]);
+  }, []);
 
   if (!data) {
     return <div>LOADING</div>;
   }
   return (
     <>
-      <GasForm />
+      <GasForm getData={getData} />
       <GasTable data={data} />
     </>
   );
