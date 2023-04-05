@@ -1,6 +1,5 @@
 import Head from "next/head";
-import GasTable from "./components/GasTable";
-import GasForm from "./components/GasForm";
+import GasContainer from "./components/GasContainer";
 
 export default function Home() {
   return (
@@ -13,8 +12,7 @@ export default function Home() {
       </Head>
       <main>
         <div>Hello!</div>
-        <GasForm />
-        <GasTable />
+        <GasContainer />
       </main>
     </>
   );
