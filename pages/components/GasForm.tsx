@@ -1,7 +1,12 @@
 import { FormEvent, useState } from "react";
 import axios from "axios";
 
-export default function GasForm() {
+type Props = {
+  getData: () => void;
+};
+
+export default function GasForm(props: Props) {
+  const { getData } = props;
   const [previousMileage, setPreviousMileage] = useState<string>("");
   const [currentMileage, setCurrentMileage] = useState<string>("");
   const [gallons, setGallons] = useState<string>("");
@@ -20,6 +25,7 @@ export default function GasForm() {
     setCurrentMileage("");
     setGallons("");
     setPricePerGallon("");
+    await getData();
   };
 
   return (
