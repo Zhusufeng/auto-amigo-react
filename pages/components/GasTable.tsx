@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+type Props = {
+  data: GasEntry[];
+};
 
 type GasEntry = {
   userId: number;
@@ -11,23 +12,8 @@ type GasEntry = {
   createdAt: string;
 };
 
-export default function GasTable() {
-  const [data, setData] = useState<GasEntry[]>([]);
-
-  const getData = async () => {
-    const response = await axios.get("/api/gas");
-    const { data } = await response;
-    console.log(data);
-    setData(data);
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
-
-  if (!data) {
-    return <div>LOADING</div>;
-  }
+export default function GasTable(props: Props) {
+  const { data } = props;
   return (
     <div>
       <table>
@@ -54,7 +40,7 @@ export default function GasTable() {
             } = entry;
             const milesDriven = currentMileage - previousMileage;
             const mpg = (milesDriven / gallons).toFixed(2);
-            const totalSpent = gallons * pricePerGallon;
+            const totalSpent = (gallons * pricePerGallon).toFixed(2);
             return (
               <tr key={createdAt}>
                 <td>{createdAt}</td>
