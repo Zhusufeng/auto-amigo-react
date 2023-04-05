@@ -7,16 +7,24 @@ type Data = {
 };
 
 const getGas = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+  // TODO When we have multiple users, update to take in userId!
+  const userId = 1;
   const query = `
-    SELECT * FROM GAS_LOG WHERE userId = 1;
+    SELECT * FROM GAS_LOG WHERE userId = ${userId};
   `;
   const [results] = await promisePool.query(query);
   return res.status(200).json(results);
 };
 
 const postGas = async (req: NextApiRequest, res: NextApiResponse<any>) => {
-  console.log(req);
-  return res.status(200).json("hello");
+  const { userId, previousMileage, currentMileage, gallons, pricePerGallon } =
+    req.body;
+  const query = `
+    INSERT INTO GAS_LOG (userId, previousMileage, currentMileage, gallons, pricePerGallon)
+    VALUES (${userId}, ${previousMileage}, ${currentMileage}, ${gallons}, ${pricePerGallon});
+  `;
+  const [results] = await promisePool.query(query);
+  return res.status(200).json(results);
 };
 
 export default async function handler(
