@@ -22,7 +22,7 @@ async function seed() {
   `;
   const seedGAS_LOGQuery = `
     INSERT INTO GAS_LOG (userId, previousMileage, currentMileage, gallons, pricePerGallon)
-    VALUES (1, 0, 1000, 10.45, 5);
+    VALUES (1, 0, 100, 10.45, 5);
   `;
   await promisePool.query(seedUSERQuery);
   await promisePool.query(seedGAS_LOGQuery);
