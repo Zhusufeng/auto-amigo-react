@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
+import axios from "axios";
 
 export default function GasForm() {
   const [previousMileage, setPreviousMileage] = useState<string>("");
@@ -6,15 +7,21 @@ export default function GasForm() {
   const [gallons, setGallons] = useState<string>("");
   const [pricePerGallon, setPricePerGallon] = useState<string>("");
 
-  const onSubmit = async e => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(previousMileage);
-    // const response = await axios.post("api/gas");
+    await axios.post("api/gas", {
+      userId: 1,
+      previousMileage,
+      currentMileage,
+      gallons,
+      pricePerGallon,
+    });
     setPreviousMileage("");
     setCurrentMileage("");
     setGallons("");
     setPricePerGallon("");
   };
+
   return (
     <form onSubmit={e => onSubmit(e)}>
       <div>
