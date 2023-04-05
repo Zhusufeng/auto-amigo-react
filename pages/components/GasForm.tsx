@@ -9,6 +9,11 @@ export default function GasForm() {
   const onSubmit = async e => {
     e.preventDefault();
     console.log(previousMileage);
+    // const response = await axios.post("api/gas");
+    setPreviousMileage("");
+    setCurrentMileage("");
+    setGallons("");
+    setPricePerGallon("");
   };
   return (
     <form onSubmit={e => onSubmit(e)}>
@@ -19,6 +24,7 @@ export default function GasForm() {
             type="text"
             name="previousMileage"
             required
+            value={previousMileage}
             onChange={e => setPreviousMileage(e.target.value)}
           />
         </div>
@@ -28,6 +34,7 @@ export default function GasForm() {
             type="text"
             name="currentMileage"
             required
+            value={currentMileage}
             onChange={e => setCurrentMileage(e.target.value)}
           />
         </div>
@@ -37,6 +44,7 @@ export default function GasForm() {
             type="text"
             name="gallons"
             required
+            value={gallons}
             onChange={e => setGallons(e.target.value)}
           />
         </div>
@@ -46,6 +54,7 @@ export default function GasForm() {
             type="text"
             name="pricePerGallon"
             required
+            value={pricePerGallon}
             onChange={e => setPricePerGallon(e.target.value)}
           />
         </div>
