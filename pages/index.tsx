@@ -1,5 +1,6 @@
 import Head from "next/head";
 import GasContainer from "./components/GasContainer";
+import NavBar from "./components/NavBar";
 
 export default function Home() {
   return (
@@ -11,7 +12,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div>Hello!</div>
+        <NavBar />
         <GasContainer />
       </main>
     </>
