@@ -1,5 +1,4 @@
 import Head from "next/head";
-import GasContainer from "./components/GasContainer";
 import NavBar from "./components/NavBar";
 
 export default function Home() {
@@ -13,7 +12,7 @@ export default function Home() {
       </Head>
       <main>
         <NavBar />
-        <GasContainer />
+        <div>Welcome to Auto Amigo!</div>
       </main>
     </>
   );
