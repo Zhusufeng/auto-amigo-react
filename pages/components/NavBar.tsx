@@ -15,7 +15,7 @@ const NavBar = () => {
       <div>
         {session ? (
           <>
-            Signed in as {session.user?.email}
+            Signed in as {session?.user?.email}
             <br />
             <button onClick={() => signOut()}>Sign out</button>
           </>
