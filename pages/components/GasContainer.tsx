@@ -19,14 +19,17 @@ export default function GasContainer() {
   const [data, setData] = useState<GasEntry[]>([]);
 
   const getData = async () => {
-    const response = await axios.get("/api/gas", {
-      params: {
-        userId: session?.session?.user?.userId,
-      },
-    });
-    const { data } = response;
-    console.log("getData data", data);
-    setData(data);
+    try {
+      const response = await axios.get("/api/gas", {
+        params: {
+          userId: session?.user?.userId,
+        },
+      });
+      const { data } = response;
+      setData(data);
+    } catch (error) {
+      console.log("error", error);
+    }
   };
 
   useEffect(() => {
