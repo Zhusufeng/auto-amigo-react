@@ -1,4 +1,5 @@
 import { FormEvent, useState } from "react";
+import { useSession } from "next-auth/react";
 import axios from "axios";
 
 type Props = {
@@ -7,6 +8,7 @@ type Props = {
 
 export default function GasForm(props: Props) {
   const { getData } = props;
+  const { data: session } = useSession();
   const [previousMileage, setPreviousMileage] = useState<string>("");
   const [currentMileage, setCurrentMileage] = useState<string>("");
   const [gallons, setGallons] = useState<string>("");
@@ -15,7 +17,7 @@ export default function GasForm(props: Props) {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await axios.post("api/gas", {
-      userId: 1,
+      userId: session?.user?.userId,
       previousMileage,
       currentMileage,
       gallons,
