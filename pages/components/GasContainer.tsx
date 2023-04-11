@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 import axios from "axios";
 import GasTable from "./GasTable";
 import GasForm from "./GasForm";
@@ -14,12 +15,17 @@ type GasEntry = {
 };
 
 export default function GasContainer() {
+  const { data: session } = useSession();
   const [data, setData] = useState<GasEntry[]>([]);
 
   const getData = async () => {
-    const response = await axios.get("/api/gas");
+    const response = await axios.get("/api/gas", {
+      params: {
+        userId: session?.session?.user?.userId,
+      },
+    });
     const { data } = response;
-    console.log(data);
+    console.log("getData data", data);
     setData(data);
   };
 
