@@ -20,7 +20,6 @@ exports.up = function (db) {
     CREATE TABLE USER (
       id int NOT NULL AUTO_INCREMENT,
       email varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-      password varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
       updatedAt datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
       createdAt timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
       PRIMARY KEY (id)

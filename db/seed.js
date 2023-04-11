@@ -17,8 +17,8 @@ const promisePool = pool.promise();
 
 async function seed() {
   const seedUSERQuery = `
-    INSERT INTO USER (email, password)
-    VALUES ("me@me.com", "test");
+    INSERT INTO USER (email)
+    VALUES ("me@me.com");
   `;
   const seedGAS_LOGQuery = `
     INSERT INTO GAS_LOG (userId, previousMileage, currentMileage, gallons, pricePerGallon)
