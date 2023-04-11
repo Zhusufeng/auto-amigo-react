@@ -12,13 +12,11 @@ export const authOptions = {
   callbacks: {
     session: async (session, user) => {
       try {
-        console.log("session", session);
+        console.log("callbacks session", session);
         if (session?.session?.user?.email) {
           const email = session?.session?.user?.email;
           let userId;
-
           const findUserResult = await getUserIdByEmail(email);
-          console.log("nextauth findUserResult", findUserResult);
 
           // If no user is found in the db, create one
           if (findUserResult === 0) {
@@ -29,7 +27,7 @@ export const authOptions = {
           }
           session.session.user = {
             ...session.session.user,
-            userId: result,
+            userId,
           };
         }
         return Promise.resolve(session);
