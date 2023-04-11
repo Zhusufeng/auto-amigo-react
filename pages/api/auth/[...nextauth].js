@@ -10,11 +10,11 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    session: async session => {
+    session: async ({ session }) => {
       try {
         console.log("callbacks session", session);
-        if (session?.session?.user?.email) {
-          const { email } = session.session.user;
+        if (session?.user?.email) {
+          const { email } = session.user;
           let userId;
           const findUserResult = await getUserIdByEmail(email);
 
@@ -25,8 +25,8 @@ export const authOptions = {
           } else {
             userId = findUserResult;
           }
-          session.session.user = {
-            ...session.session.user,
+          session.user = {
+            ...session.user,
             userId,
           };
         }
