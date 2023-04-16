@@ -6,25 +6,24 @@ const NavBar = () => {
 
   return (
     <div style={{ display: "flex" }}>
-      <div>
+      <div style={{ padding: "0 10px" }}>
         <Link href="/">Auto Amigo</Link>
       </div>
-      <div>
+      <div style={{ padding: "0 10px" }}>
         <Link href="/gas">Gas Log</Link>
       </div>
-      <div>
+      <div style={{ padding: "0 10px" }}>
         {session ? (
-          <>
-            Signed in as {session?.user?.email}
-            <br />
-            <button onClick={() => signOut()}>Sign out</button>
-          </>
+          <>Signed in as {session?.user?.email}</>
         ) : (
-          <>
-            Not signed in
-            <br />
-            <button onClick={() => signIn()}>Sign in</button>
-          </>
+          <>Not signed in</>
+        )}
+      </div>
+      <div style={{ padding: "0 10px" }}>
+        {session ? (
+          <button onClick={() => signOut()}>Sign out</button>
+        ) : (
+          <button onClick={() => signIn()}>Sign in</button>
         )}
       </div>
     </div>
