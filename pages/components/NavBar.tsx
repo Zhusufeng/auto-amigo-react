@@ -1,5 +1,6 @@
 import { useSession, signIn, signOut } from "next-auth/react";
 import Link from "next/link";
+import { Button } from "antd";
 
 const itemStyle: React.CSSProperties = {
   padding: "0 10px",
@@ -25,9 +26,9 @@ const NavBar = () => {
       </div>
       <div style={itemStyle}>
         {session ? (
-          <button onClick={() => signOut()}>Sign out</button>
+          <Button onClick={() => signOut()}>Sign out</Button>
         ) : (
-          <button onClick={() => signIn()}>Sign in</button>
+          <Button onClick={() => signIn()}>Sign in</Button>
         )}
       </div>
     </div>
