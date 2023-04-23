@@ -1,6 +1,7 @@
 import { FormEvent, useState } from "react";
 import { useSession } from "next-auth/react";
 import axios from "axios";
+import { Form, Button, Input } from "antd";
 
 type Props = {
   getData: () => void;
@@ -9,10 +10,6 @@ type Props = {
 export default function GasForm(props: Props) {
   const { getData } = props;
   const { data: session } = useSession();
-  const [previousMileage, setPreviousMileage] = useState<string>("");
-  const [currentMileage, setCurrentMileage] = useState<string>("");
-  const [gallons, setGallons] = useState<string>("");
-  const [pricePerGallon, setPricePerGallon] = useState<string>("");
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -23,60 +20,51 @@ export default function GasForm(props: Props) {
       gallons,
       pricePerGallon,
     });
-    setPreviousMileage("");
-    setCurrentMileage("");
-    setGallons("");
-    setPricePerGallon("");
+    // Clear form
     await getData();
   };
 
   return (
-    <form onSubmit={e => onSubmit(e)}>
-      <div>
-        <div>
-          <label htmlFor="previousMileage">Previous Mileage</label>
-          <input
-            type="text"
-            name="previousMileage"
-            required
-            value={previousMileage}
-            onChange={e => setPreviousMileage(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="currentMileage">Current Mileage</label>
-          <input
-            type="text"
-            name="currentMileage"
-            required
-            value={currentMileage}
-            onChange={e => setCurrentMileage(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="gallons">Gallons</label>
-          <input
-            type="text"
-            name="gallons"
-            required
-            value={gallons}
-            onChange={e => setGallons(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="pricePerGallon">Price Per Gallon</label>
-          <input
-            type="text"
-            name="pricePerGallon"
-            required
-            value={pricePerGallon}
-            onChange={e => setPricePerGallon(e.target.value)}
-          />
-        </div>
-        <div>
-          <input type="submit" value="Submit" />
-        </div>
-      </div>
-    </form>
+    <Form name="basic" onFinish={onSubmit}>
+      <Form.Item
+        label="Previous Mileage"
+        name="previousMileage"
+        rules={[
+          { required: true, message: "Please input your previous mileage!" },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        label="Current Mileage"
+        name="currentMileage"
+        rules={[
+          { required: true, message: "Please input your current mileage!" },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        label="Gallons"
+        name="gallons"
+        rules={[{ required: true, message: "Please input your gallons!" }]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        label="Price Per Gallon"
+        name="pricePerGallon"
+        rules={[
+          { required: true, message: "Please input the price per gallon!" },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item>
+        <Button type="primary" htmlType="submit">
+          Submit
+        </Button>
+      </Form.Item>
+    </Form>
   );
 }
