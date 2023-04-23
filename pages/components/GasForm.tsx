@@ -1,4 +1,3 @@
-import { FormEvent, useState } from "react";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import { Form, Button, Input } from "antd";
@@ -7,12 +6,20 @@ type Props = {
   getData: () => void;
 };
 
+type FormValues = {
+  previousMileage: string;
+  currentMileage: string;
+  gallons: string;
+  pricePerGallon: string;
+};
+
 export default function GasForm(props: Props) {
   const { getData } = props;
   const { data: session } = useSession();
+  const [form] = Form.useForm();
 
-  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmit = async (values: FormValues) => {
+    const { previousMileage, currentMileage, gallons, pricePerGallon } = values;
     await axios.post("api/gas", {
       userId: session?.user?.userId,
       previousMileage,
@@ -20,12 +27,12 @@ export default function GasForm(props: Props) {
       gallons,
       pricePerGallon,
     });
-    // Clear form
+    form.resetFields();
     await getData();
   };
 
   return (
-    <Form name="basic" onFinish={onSubmit}>
+    <Form name="basic" onFinish={onSubmit} form={form}>
       <Form.Item
         label="Previous Mileage"
         name="previousMileage"
