@@ -7,24 +7,24 @@ const columns = [
     key: "createdAt",
   },
   {
-    title: "previousMileage",
+    title: "Previous Mileage",
     dataIndex: "previousMileage",
     key: "previousMileage",
   },
   {
-    title: "currentMileage",
+    title: "Current Mileage",
     dataIndex: "currentMileage",
     key: "currentMileage",
   },
-  { title: "milesDriven", dataIndex: "milesDriven", key: "milesDriven" },
-  { title: "gallons", dataIndex: "gallons", key: "gallons" },
-  { title: "mpg", dataIndex: "mpg", key: "mpg" },
+  { title: "Miles Driven", dataIndex: "milesDriven", key: "milesDriven" },
+  { title: "Gallons", dataIndex: "gallons", key: "gallons" },
+  { title: "MPG", dataIndex: "mpg", key: "mpg" },
   {
-    title: "pricePerGallon",
+    title: "Price Per Gallon",
     dataIndex: "pricePerGallon",
     key: "pricePerGallon",
   },
-  { title: "totalSpent", dataIndex: "totalSpent", key: "totalSpent" },
+  { title: "Total Spent", dataIndex: "totalSpent", key: "totalSpent" },
 ];
 
 type Props = {
