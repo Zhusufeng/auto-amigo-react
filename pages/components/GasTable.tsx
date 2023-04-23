@@ -1,3 +1,32 @@
+import { Table } from "antd";
+
+const columns = [
+  {
+    title: "Date",
+    dataIndex: "createdAt",
+    key: "createdAt",
+  },
+  {
+    title: "previousMileage",
+    dataIndex: "previousMileage",
+    key: "previousMileage",
+  },
+  {
+    title: "currentMileage",
+    dataIndex: "currentMileage",
+    key: "currentMileage",
+  },
+  { title: "milesDriven", dataIndex: "milesDriven", key: "milesDriven" },
+  { title: "gallons", dataIndex: "gallons", key: "gallons" },
+  { title: "mpg", dataIndex: "mpg", key: "mpg" },
+  {
+    title: "pricePerGallon",
+    dataIndex: "pricePerGallon",
+    key: "pricePerGallon",
+  },
+  { title: "totalSpent", dataIndex: "totalSpent", key: "totalSpent" },
+];
+
 type Props = {
   data: GasEntry[];
 };
@@ -12,50 +41,22 @@ type GasEntry = {
   createdAt: string;
 };
 
-export default function GasTable(props: Props) {
+const GasTable = (props: Props) => {
   const { data } = props;
+
+  const tableData = data.map(entry => {
+    const { previousMileage, currentMileage, gallons, pricePerGallon } = entry;
+    const milesDriven = currentMileage - previousMileage;
+    const mpg = (milesDriven / gallons).toFixed(2);
+    const totalSpent = (gallons * pricePerGallon).toFixed(2);
+    return { ...entry, milesDriven, mpg, totalSpent };
+  });
+
   return (
     <div>
-      <table>
-        <thead>
-          <tr>
-            <td>Date</td>
-            <td>Previous Mileage</td>
-            <td>Current Mileage</td>
-            <td>Miles Driven</td>
-            <td>Gallons</td>
-            <td>MPG</td>
-            <td>Price per Gallon</td>
-            <td>Total Spent</td>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map(entry => {
-            const {
-              createdAt,
-              previousMileage,
-              currentMileage,
-              gallons,
-              pricePerGallon,
-            } = entry;
-            const milesDriven = currentMileage - previousMileage;
-            const mpg = (milesDriven / gallons).toFixed(2);
-            const totalSpent = (gallons * pricePerGallon).toFixed(2);
-            return (
-              <tr key={createdAt}>
-                <td>{createdAt}</td>
-                <td>{previousMileage}</td>
-                <td>{currentMileage}</td>
-                <td>{milesDriven}</td>
-                <td>{gallons}</td>
-                <td>{mpg}</td>
-                <td>{pricePerGallon}</td>
-                <td>{totalSpent}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <Table columns={columns} dataSource={tableData} />
     </div>
   );
-}
+};
+
+export default GasTable;
