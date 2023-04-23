@@ -13,6 +13,13 @@ type FormValues = {
   pricePerGallon: string;
 };
 
+const formItemLayout = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 6 },
+  },
+};
+
 export default function GasForm(props: Props) {
   const { getData } = props;
   const { data: session } = useSession();
@@ -32,7 +39,13 @@ export default function GasForm(props: Props) {
   };
 
   return (
-    <Form name="basic" onFinish={onSubmit} form={form}>
+    <Form
+      name="basic"
+      onFinish={onSubmit}
+      form={form}
+      {...formItemLayout}
+      style={{ maxWidth: 600 }}
+    >
       <Form.Item
         label="Previous Mileage"
         name="previousMileage"
