@@ -40,7 +40,9 @@ export default function GasForm(props: Props) {
 
   return (
     <div>
-      <div>Keep track of your gas history!</div>
+      <div style={{ padding: "0 0 10px 0" }}>
+        Keep track of your gas history!
+      </div>
       <Form
         name="basic"
         onFinish={onSubmit}
