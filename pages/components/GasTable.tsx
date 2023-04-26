@@ -32,6 +32,7 @@ type Props = {
 };
 
 type GasEntry = {
+  id: number;
   userId: number;
   previousMileage: number;
   currentMileage: number;
@@ -45,11 +46,13 @@ const GasTable = (props: Props) => {
   const { data } = props;
 
   const tableData = data.map(entry => {
-    const { previousMileage, currentMileage, gallons, pricePerGallon } = entry;
+    const { id, previousMileage, currentMileage, gallons, pricePerGallon } =
+      entry;
+    const key = id;
     const milesDriven = currentMileage - previousMileage;
     const mpg = (milesDriven / gallons).toFixed(2);
     const totalSpent = (gallons * pricePerGallon).toFixed(2);
-    return { ...entry, milesDriven, mpg, totalSpent };
+    return { ...entry, key, milesDriven, mpg, totalSpent };
   });
 
   return (
