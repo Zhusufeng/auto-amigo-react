@@ -5,6 +5,7 @@ import GasTable from "./GasTable";
 import GasForm from "./GasForm";
 
 type GasEntry = {
+  id: number;
   userId: number;
   previousMileage: number;
   currentMileage: number;
@@ -32,6 +33,24 @@ export default function GasContainer() {
     }
   };
 
+  const handleEdit = (entry: GasEntry) => {
+    console.log("edit", entry);
+  };
+
+  const handleDelete = async (entry: GasEntry) => {
+    try {
+      console.log("delete", entry);
+      const response = await axios.delete("api/gas", {
+        data: { gasId: entry.id },
+      });
+      console.log("response", response);
+      // TODO Rerender page
+    } catch (error) {
+      // Placeholder
+      console.log("error", error);
+    }
+  };
+
   useEffect(() => {
     getData();
   }, []);
@@ -42,7 +61,11 @@ export default function GasContainer() {
   return (
     <>
       <GasForm getData={getData} />
-      <GasTable data={data} />
+      <GasTable
+        data={data}
+        handleEdit={handleEdit}
+        handleDelete={handleDelete}
+      />
     </>
   );
 }
