@@ -25,6 +25,18 @@ const columns = [
     key: "pricePerGallon",
   },
   { title: "Total Spent", dataIndex: "totalSpent", key: "totalSpent" },
+  {
+    title: "Edit",
+    render: () => {
+      return <a>Edit</a>;
+    },
+  },
+  {
+    title: "Delete",
+    render: () => {
+      return <a>Delete</a>;
+    },
+  },
 ];
 
 type Props = {
