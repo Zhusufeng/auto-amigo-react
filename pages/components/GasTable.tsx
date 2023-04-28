@@ -1,4 +1,6 @@
 import { Table, Button } from "antd";
+import { AxiosResponse } from "axios";
+import { UseMutationResult } from "react-query";
 
 type GasEntry = {
   id: number;
@@ -14,7 +16,12 @@ type GasEntry = {
 type Props = {
   data: GasEntry[];
   handleEdit: (record: GasEntry) => void;
-  handleDelete: (record: GasEntry) => void;
+  handleDelete: UseMutationResult<
+    AxiosResponse<any, any>,
+    unknown,
+    GasEntry,
+    unknown
+  >;
 };
 
 const GasTable = (props: Props) => {
@@ -65,7 +72,9 @@ const GasTable = (props: Props) => {
       title: "Delete",
       render: (_: any, record: GasEntry) => {
         // TODO Add button and a confirmation
-        return <Button onClick={() => handleDelete(record)}>Delete</Button>;
+        return (
+          <Button onClick={() => handleDelete.mutate(record)}>Delete</Button>
+        );
       },
     },
   ];
