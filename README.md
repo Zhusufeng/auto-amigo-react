@@ -4,16 +4,19 @@
 
 Auto Amigo is your car friend. This is the React version.
 
+This is Lisa's side project to try new tech and play around.
+
 ### Current Features
 
 - This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 - This uses Google OAuth using [next-auth](https://next-auth.js.org/).
-- It keeps a gas log. When you go to the gas station, you enter your previous mileage (you can reference from your past entry), current mileage, gallons filled, and the price per gallon. It will give you your MPG and total spent.
+- Users can create a log of their gas usage and spending. When they go to the gas station, they enter their previous mileage, current mileage, gallons filled, and the price per gallon. It will give them their MPG and total spent.
+- User can delete an entry from their gas log.
 
 ### Desired Product Features
 
 - Add ability to edit an entry to the gas log
-- Add ability to delete an entry to the gas log
+- Add CSRF check
 - Add validation to gas log form
 - Add sorting to table
 - Add charts using D3 or similar
@@ -62,8 +65,7 @@ These are instructions to get the project running locally for development.
    ```bash
    npm install -g db-migrate
    ```
-1. Create a copy of example.env.local named .env. Fill out the file.
-<!-- TODO: mysql2 or db-migrate cannot find the env variables when inside of .env.local.  -->
+1. Create a copy of example.env.local named .env. Fill out the file. <!-- TODO: mysql2 or db-migrate cannot find the env variables when inside of .env.local.  -->
 1. Migrate the database up (to get the structure).
    ```bash
    db-migrate up
@@ -83,8 +85,10 @@ These are instructions to get the project running locally for development.
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
 - `/api/gas`
+  - DELETE - deletes an entry
   - GET - gets gas log for a user
-  - POST - adds a gas log entry for a user
+  - PATCH - updates an entry
+  - POST - adds a gas log entry
 - `/api/user`
   - GET - gets a user (to come)
   - POST - creates a user (to come)
