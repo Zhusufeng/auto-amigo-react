@@ -1,10 +1,7 @@
 import { useSession } from "next-auth/react";
+import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
 import { Form, Button, Input } from "antd";
-
-type Props = {
-  getData: () => void;
-};
 
 type FormValues = {
   previousMileage: string;
@@ -20,23 +17,32 @@ const formItemLayout = {
   },
 };
 
-export default function GasForm(props: Props) {
-  const { getData } = props;
+export default function GasForm() {
+  const queryClient = useQueryClient();
   const { data: session } = useSession();
   const [form] = Form.useForm();
 
-  const onSubmit = async (values: FormValues) => {
-    const { previousMileage, currentMileage, gallons, pricePerGallon } = values;
-    await axios.post("api/gas", {
-      userId: session?.user?.userId,
-      previousMileage,
-      currentMileage,
-      gallons,
-      pricePerGallon,
-    });
-    form.resetFields();
-    await getData();
-  };
+  const mutation = useMutation({
+    mutationFn: (values: FormValues) => {
+      try {
+        const { previousMileage, currentMileage, gallons, pricePerGallon } =
+          values;
+        return axios.post("api/gas", {
+          userId: session?.user?.userId,
+          previousMileage,
+          currentMileage,
+          gallons,
+          pricePerGallon,
+        });
+      } catch (mutationError) {
+        throw mutationError;
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: "gasLogData" });
+      form.resetFields();
+    },
+  });
 
   return (
     <div>
@@ -45,7 +51,9 @@ export default function GasForm(props: Props) {
       </div>
       <Form
         name="basic"
-        onFinish={onSubmit}
+        onFinish={vals => {
+          mutation.mutate(vals);
+        }}
         form={form}
         {...formItemLayout}
         style={{ maxWidth: 600 }}
