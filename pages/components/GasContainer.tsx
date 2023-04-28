@@ -1,5 +1,5 @@
 import { useSession } from "next-auth/react";
-import { useQuery } from "react-query";
+import { useQuery, useMutation, useQueryClient } from "react-query";
 import axios from "axios";
 import GasTable from "./GasTable";
 import GasForm from "./GasForm";
@@ -16,7 +16,9 @@ type GasEntry = {
 };
 
 export default function GasContainer() {
+  const queryClient = useQueryClient();
   const { data: session } = useSession();
+  // TODO Show error message if receive an error
   const { isLoading, error, data } = useQuery({
     queryKey: "gasLogData",
     queryFn: async () => {
@@ -37,19 +39,21 @@ export default function GasContainer() {
     console.log("edit", entry);
   };
 
-  const handleDelete = async (entry: GasEntry) => {
-    try {
-      console.log("delete", entry);
-      const response = await axios.delete("api/gas", {
-        data: { gasId: entry.id },
-      });
-      console.log("response", response);
-      // TODO Rerender page
-    } catch (error) {
-      // Placeholder
-      console.log("error", error);
-    }
-  };
+  // TODO Show error message if receive an error
+  const handleDelete = useMutation({
+    mutationFn: (entry: GasEntry) => {
+      try {
+        return axios.delete("api/gas", {
+          data: { gasId: entry.id },
+        });
+      } catch (mutationError) {
+        throw mutationError;
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: "gasLogData" });
+    },
+  });
 
   if (isLoading) {
     return <div>LOADING</div>;
