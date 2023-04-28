@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import { useQuery } from "react-query";
 import axios from "axios";
 import GasTable from "./GasTable";
 import GasForm from "./GasForm";
@@ -17,21 +17,21 @@ type GasEntry = {
 
 export default function GasContainer() {
   const { data: session } = useSession();
-  const [data, setData] = useState<GasEntry[]>([]);
-
-  const getData = async () => {
-    try {
-      const response = await axios.get("/api/gas", {
-        params: {
-          userId: session?.user?.userId,
-        },
-      });
-      const { data } = response;
-      setData(data);
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
+  const { isLoading, error, data } = useQuery({
+    queryKey: "gasLogData",
+    queryFn: async () => {
+      try {
+        const response = await axios.get("/api/gas", {
+          params: {
+            userId: session?.user?.userId,
+          },
+        });
+        return response.data;
+      } catch (gasLogError) {
+        throw gasLogError;
+      }
+    },
+  });
 
   const handleEdit = (entry: GasEntry) => {
     console.log("edit", entry);
@@ -51,16 +51,12 @@ export default function GasContainer() {
     }
   };
 
-  useEffect(() => {
-    getData();
-  }, []);
-
-  if (!data) {
+  if (isLoading) {
     return <div>LOADING</div>;
   }
   return (
     <>
-      <GasForm getData={getData} />
+      <GasForm />
       <GasTable
         data={data}
         handleEdit={handleEdit}
