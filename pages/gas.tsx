@@ -7,7 +7,7 @@ export default function Home() {
   const { data: session } = useSession();
   return (
     <>
-      <Head title="Auto Amgio - Gas" />
+      <Head title="Auto Amigo - Gas" />
       <Layout>
         {session ? (
           <GasContainer />
