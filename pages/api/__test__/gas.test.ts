@@ -1,4 +1,4 @@
-import { deleteGas, getGas } from "../gas";
+import { deleteGas, getGas, postGas } from "../gas";
 import type { NextApiRequest, NextApiResponse } from "next";
 import * as db from "../../../db/config";
 
@@ -41,7 +41,7 @@ test("getGas", async () => {
   const req: NextApiRequest = {
     url: "/api/gas",
     query: {
-      userId: "1",
+      userId: 1,
     },
   } as unknown as NextApiRequest;
 
@@ -74,5 +74,46 @@ test("getGas", async () => {
 
   await getGas(req, mockedRes);
   expect(mockedRes.status).toHaveBeenCalledWith(200);
+  expect(mockedJson).toHaveBeenCalledWith(mockedResult);
+});
+
+test("postGas", async () => {
+  const req: NextApiRequest = {
+    url: "/api/gas",
+    body: {
+      userId: 1,
+      previousMileage: 200,
+      currentMileage: 300,
+      gallons: 10,
+      pricePerGallon: 5.1,
+    },
+  } as NextApiRequest;
+
+  const mockedResult = {
+    fieldCount: 0,
+    affectedRows: 1,
+    insertId: 8,
+    info: "",
+    serverStatus: 2,
+    warningStatus: 0,
+  };
+
+  db.promisePool.query.mockImplementationOnce(async (query: string) => {
+    // Spacing must also match
+    const testQuery = `
+      INSERT INTO GAS_LOG (userId, previousMileage, currentMileage, gallons, pricePerGallon)
+      VALUES (1, 200, 300, 10, 5.1);
+    `;
+    expect(query).toEqual(testQuery);
+    return [mockedResult];
+  });
+
+  const mockedJson = jest.fn();
+  const mockedRes: jest.Mocked<NextApiResponse> = {
+    status: jest.fn().mockReturnValue({ json: mockedJson }),
+  } as unknown as jest.Mocked<NextApiResponse>;
+
+  await postGas(req, mockedRes);
+  expect(mockedRes.status).toHaveBeenCalledWith(201);
   expect(mockedJson).toHaveBeenCalledWith(mockedResult);
 });
