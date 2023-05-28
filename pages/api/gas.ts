@@ -67,7 +67,10 @@ export const patchGas = async (
   }
 };
 
-const postGas = async (req: NextApiRequest, res: NextApiResponse<any>) => {
+export const postGas = async (
+  req: NextApiRequest,
+  res: NextApiResponse<any>
+) => {
   try {
     const { userId, previousMileage, currentMileage, gallons, pricePerGallon } =
       req.body;
