@@ -6,21 +6,27 @@ type Data = {
   name: string;
 };
 
-const deleteGas = async (req: NextApiRequest, res: NextApiResponse<any>) => {
+export const deleteGas = async (
+  req: NextApiRequest,
+  res: NextApiResponse
+): Promise<NextApiResponse | void> => {
   try {
     const { gasId } = req.body;
     const query = `
       DELETE FROM GAS_LOG
       WHERE id = ${gasId}
     `;
-    const [results] = await promisePool.query(query);
-    return res.status(204).json(results);
+    await promisePool.query(query);
+    return res.status(204);
   } catch (error: any) {
     return res.status(400).json(error);
   }
 };
 
-const getGas = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+export const getGas = async (
+  req: NextApiRequest,
+  res: NextApiResponse<Data>
+) => {
   try {
     const { userId } = req.query;
     if (!userId) {
@@ -38,7 +44,10 @@ const getGas = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   }
 };
 
-const patchGas = async (req: NextApiRequest, res: NextApiResponse<any>) => {
+export const patchGas = async (
+  req: NextApiRequest,
+  res: NextApiResponse<any>
+) => {
   try {
     const { gasId, previousMileage, currentMileage, gallons, pricePerGallon } =
       req.body;
@@ -58,7 +67,10 @@ const patchGas = async (req: NextApiRequest, res: NextApiResponse<any>) => {
   }
 };
 
-const postGas = async (req: NextApiRequest, res: NextApiResponse<any>) => {
+export const postGas = async (
+  req: NextApiRequest,
+  res: NextApiResponse<any>
+) => {
   try {
     const { userId, previousMileage, currentMileage, gallons, pricePerGallon } =
       req.body;
